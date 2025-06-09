@@ -10,7 +10,7 @@ Para executar a aplicação localmente, siga os passos abaixo:
 
 1.  **Clonar o repositório:**
     ```bash
-    git clone [https://github.com/dolthub/dolt](https://github.com/dolthub/dolt)
+    git clone [https://github.com/marcioluca/teste-trainee-dev](https://github.com/marcioluca/teste-trainee-dev)
     ```
 2.  **Navegar para a pasta do projeto:**
     ```bash
@@ -35,7 +35,6 @@ A aplicação não iniciava devido a uma série de erros de configuração e có
 3.  **Erro de Compilação de Componentes:**
     * **HeaderComponent:** Havia um erro de digitação no nome da classe (`HeadeComponent`), o que impedia sua importação correta. O nome foi corrigido.
     * **NewTaskComponent:** A classe não possuía o decorator `@Component`, impedindo o Angular de reconhecê-la como um componente. O decorator foi adicionado.
-    * **RouterModule:** O módulo `AppModule` não importava o `RouterModule`, causando um erro de reconhecimento da diretiva `<router-outlet>`. O módulo foi importado.
 
 ## Relatório de Correção de Bugs
 
