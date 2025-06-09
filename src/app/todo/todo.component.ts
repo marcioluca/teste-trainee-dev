@@ -23,16 +23,6 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  addTodo(newTodoTitle: string) {
-    const newTodo: Todo = {
-      id: this.todos.length + 1,
-      title: newTodoTitle,
-      completed: false
-    };
-
-    this.todoService.addTodo(newTodo);
-  }
-
   updateTodo(updatedTodo: Todo) {
     this.todoService.updateTodo(updatedTodo);
   }
@@ -42,28 +32,31 @@ export class TodoComponent implements OnInit {
   }
 
   clearAll() {
-    if (this.todos.length > 0 && confirm('Are you sure you want to clear all tasks?')) {
+    if (this.todos.length > 0 && confirm('Tem certeza que deseja apagar TODAS as tarefas?')) {
       this.todoService.clearAll();
       this.loadTodos();
     }
   }
 
   clearCompletedTasks() {
-    this.todoService.clearCompletedTasks();
-    this.loadTodos();
+    if(confirm('Tem certeza que deseja apagar as tarefas concluidas?')) {
+      this.todoService.clearCompletedTasks();
+      this.loadTodos();   
+    }
   }
 
   toggleCompletedTasks() {
     this.showCompletedTasks = !this.showCompletedTasks;
-    this.loadTodos();
-    this.todos = this.filteredTodos();
   }
 
-  filteredTodos() {
-    return this.showCompletedTasks ? this.todos : this.todos.filter(todo => !todo.completed);
+  get filteredTodos() {
+    if(this.showCompletedTasks) {
+      return this.todos;
+    }
+    return this.todos.filter(todo => !todo.completed);
   }
 
   get labelClearAll(){
-    return 'Clear All'
+    return 'Limpar Tudo'
   }
 }
