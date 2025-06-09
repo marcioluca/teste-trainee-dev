@@ -9,17 +9,19 @@ import { TodoService } from '../../shared/services/todo.service';
 })
 export class TodoItemComponent {
   @Input() todo!: Todo;
-  @Output() deletedTodo: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private todoService: TodoService) {}
 
   deleteTodo(): void {
-    if (confirm('Are you sure you want to delete this task?')) {
+    if (confirm('Você tem certeza que deseja remover esta tarefa?')) {
       this.todoService.deleteTodo(this.todo.id);
     }
   }
 
   onTaskChecked(): void {
     this.todoService.updateTodo(this.todo);
+  }
+  editTodo(): void {
+    this.todoService.startEdit(this.todo);
   }
 }

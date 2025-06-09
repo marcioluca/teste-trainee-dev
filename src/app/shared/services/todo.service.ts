@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Todo } from '../models/todo.model';
 
 @Injectable({
@@ -8,8 +8,21 @@ import { Todo } from '../models/todo.model';
 export class TodoService {
   private todos!: Todo[];
 
+  private editingTodo = new BehaviorSubject<Todo | null>(null);
+  public editingTodo$ = this.editingTodo.asObservable();
+
   constructor() {
     this.loadFromLocalStorage();
+  }
+
+  // NOVO: Método para iniciar a edição
+  startEdit(todo: Todo): void {
+    this.editingTodo.next(todo);
+  }
+
+  // NOVO: Método para limpar/finalizar a edição
+  clearEdit(): void {
+    this.editingTodo.next(null);
   }
 
   private saveToLocalStorage(): void {
