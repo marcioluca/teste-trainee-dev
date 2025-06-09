@@ -37,20 +37,32 @@ export class NewTaskComponent implements OnInit, OnDestroy {
     }
 
     if (this.isEditMode && this.currentEditingTodo) {
-
-      // MODO DE ATUALIZAÇÃO
+     
       const updatedTodo = { ...this.currentEditingTodo, title: this.newTaskTitle.trim() };
       this.todoService.updateTodo(updatedTodo);
       this.todoService.clearEdit();
     } else {
-
-      // MODO DE CRIAÇÃO
-      const newTodo: Todo = {
+      if(this.newTaskTitle.includes('|')) {
+        const titles = this.newTaskTitle.split('|');
+        titles.forEach(title => {
+          const trimmedTitle = title.trim();
+          if(trimmedTitle) {
+            const newTodo: Todo = {
+              id: this.todoService.getTodoNewId(),
+              title: trimmedTitle,
+              completed: false
+            };
+            this.todoService.addTodo(newTodo);
+          }
+        });
+      } else {
+       const newTodo: Todo = {
         id: this.todoService.getTodoNewId(),
         title: this.newTaskTitle.trim(),
         completed: false
-      };
-      this.todoService.addTodo(newTodo);
+       }
+       this.todoService.addTodo(newTodo);
+      }
     }
 
     this.newTaskTitle = ''; 
