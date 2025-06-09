@@ -45,3 +45,9 @@
 .fa-trash-alt:hover {
   color: rgba(65, 63, 63, 0.62);
 }
+
+.todo-item_actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
