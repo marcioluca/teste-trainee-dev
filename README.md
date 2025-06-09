@@ -1,8 +1,12 @@
-# Relatório Técnico - Márcio Lucas do Santos
-
 ## Visão Geral da Solução
 
-Este projeto foi recebido em um estado não funcional, com múltiplos erros que impediam sua inicialização, além de uma lista extensa de bugs de funcionalidade e de interface. O trabalho realizado focou em estabilizar a aplicação, corrigir sistematicamente todos os bugs reportados pela equipe de QA e refatorar o código para seguir boas práticas de desenvolvimento em Angular, resultando em uma aplicação estável, funcional e com código limpo e organizado.
+Este projeto foi recebido em um estado não funcional e com uma lista extensa de bugs. O trabalho realizado focou em três frentes principais:
+
+1.  **Estabilização:** Correção de múltiplos erros de compilação, configuração e dependências que impediam a inicialização da aplicação.
+2.  **Correção de Bugs:** Resolução de todos os 13 bugs de funcionalidade e interface reportados pela equipe de QA, resultando em uma aplicação estável e confiável.
+3.  **Implementação de Melhorias:** Desenvolvimento e integração de todas as 6 novas funcionalidades solicitadas, elevando a qualidade e a experiência de uso da aplicação.
+
+O resultado é uma aplicação robusta, funcional e moderna, com código limpo e seguindo as boas práticas de desenvolvimento em Angular.
 
 ## Como Executar a Aplicação
 
@@ -10,7 +14,7 @@ Para executar a aplicação localmente, siga os passos abaixo:
 
 1.  **Clonar o repositório:**
     ```bash
-    git clone [https://github.com/marcioluca/teste-trainee-dev](https://github.com/marcioluca/teste-trainee-dev)
+    git clone (https://github.com/marcioluca/teste-trainee-dev)
     ```
 2.  **Navegar para a pasta do projeto:**
     ```bash
@@ -28,57 +32,27 @@ Para executar a aplicação localmente, siga os passos abaixo:
 
 ## Correção dos Erros Iniciais (npm start)
 
-A aplicação não iniciava devido a uma série de erros de configuração e código. As seguintes correções foram aplicadas:
-
-1.  **Script `start` Ausente:** O arquivo `package.json` não possuía o script `start`. Foi adicionado `"start": "ng serve"` para permitir a execução padrão.
-2.  **Dependência Faltando:** A biblioteca `@fortawesome/fontawesome-free` era referenciada nos estilos do `angular.json` mas não estava listada no `package.json`, causando um erro de compilação. A dependência foi adicionada.
-3.  **Erro de Compilação de Componentes:**
-    * **HeaderComponent:** Havia um erro de digitação no nome da classe (`HeadeComponent`), o que impedia sua importação correta. O nome foi corrigido.
-    * **NewTaskComponent:** A classe não possuía o decorator `@Component`, impedindo o Angular de reconhecê-la como um componente. O decorator foi adicionado.
+A aplicação não iniciava devido a uma série de erros. As seguintes correções foram aplicadas para estabilizar o ambiente:
+* **Script `start` Ausente:** Adicionado `"start": "ng serve"` ao `package.json`.
+* **Dependência Faltando:** Adicionada a dependência `@fortawesome/fontawesome-free` ao `package.json`.
+* **Erro de Compilação de Componentes:** Corrigido erro de digitação na classe `HeaderComponent`, adicionado o decorator `@Component` ao `NewTaskComponent` e importado o `RouterModule` no `AppModule` para reconhecer a diretiva `<router-outlet>`.
 
 ## Relatório de Correção de Bugs
 
-Todos os 13 bugs reportados na lista do QA foram corrigidos. Abaixo, o detalhamento de cada um:
+Todos os 13 bugs reportados na lista do QA foram corrigidos. O histórico de commits detalha cada correção individualmente.
 
-**1. Tarefa adicionada duas vezes:**
-* **Causa Raiz:** O método `addTask()` no `new-task.component.ts` chamava o serviço `addTodo()` duas vezes seguidas.
-* **Solução:** A chamada duplicada ao serviço foi removida.
+## Relatório de Implementação de Melhorias
 
-**2. Só era possível salvar uma tarefa na primeira vez:**
-* **Causa Raiz:** Havia uma lógica incorreta com uma variável `count` que bloqueava a execução da função `addTask()` após o primeiro clique.
-* **Solução:** A lógica de bloqueio com a variável `count` foi completamente removida.
+Todas as 6 melhorias solicitadas foram implementadas com sucesso:
 
-**3. Texto do botão de limpar não estava em português:**
-* **Causa Raiz:** O texto do botão "Limpar Tudo" vinha de uma propriedade `get labelClearAll()` no `todo.component.ts` que retornava "Clear All".
-* **Solução:** O retorno da propriedade foi traduzido para "Limpar Tudo".
+1.  **Ordenar de A a Z:** Foi adicionado um botão e um método `sortAlphabetically()` que utiliza `Array.prototype.sort` com `localeCompare` para uma ordenação alfabética robusta. A referência do array de tarefas é atualizada para garantir que o Angular atualize a interface.
 
-**4 e 5. Comportamento invertido dos botões "Exibir/Ocultar Tarefas Concluídas":**
-* **Causa Raiz:** A lógica do texto no template `todo.component.html` estava invertida, e a forma de filtrar os todos era ineficiente.
-* **Solução:** A lógica de texto do botão foi corrigida com o operador ternário. A filtragem foi refatorada para usar uma propriedade `get filteredTodos()` no componente, tornando o código mais limpo e reativo.
+2.  **Adicionar com a Tecla Enter:** A tag `<input>` no formulário de nova tarefa foi atualizada para capturar o evento `(keydown.enter)`, permitindo que o usuário adicione tarefas de forma mais rápida e intuitiva.
 
-**6. Limpar tarefas concluídas sem confirmação:**
-* **Causa Raiz:** O método `clearCompletedTasks()` no `todo.component.ts` não possuía um diálogo de confirmação.
-* **Solução:** Foi adicionada uma chamada `if (confirm(...))` para solicitar a confirmação do usuário antes de executar a ação, seguindo o padrão do botão "Limpar Tudo".
+3.  **Adicionar Múltiplas Tarefas:** O método de adicionar tarefa foi aprimorado para detectar o caractere `|`. Se presente, a string é dividida (`split('|')`) e um loop é executado para adicionar cada tarefa individualmente, ignorando entradas vazias.
 
-**7. "Limpar Tarefas Concluídas" removia as não concluídas:**
-* **Causa Raiz:** No `todo.service.ts`, o método `.filter()` estava com a lógica invertida (`.filter(t => t.completed === true)`), mantendo as tarefas concluídas em vez de removê-las.
-* **Solução:** A lógica do filtro foi corrigida para `.filter(t => !t.completed)`, preservando apenas as tarefas não concluídas.
+4.  **Filtro de Palavras Obscenas:** A biblioteca `bad-words` foi instalada e integrada. Uma verificação `isProfane()` foi adicionada para bloquear o cadastro de tarefas com conteúdo impróprio e exibir um alerta ao usuário.
 
-**8. Botão "Editar" não funcional:**
-* **Causa Raiz:** Não havia nenhuma implementação para a funcionalidade de edição.
-* **Solução:** Foi implementada uma comunicação entre os componentes `todo-item` e `new-task` através de um `BehaviorSubject` no `TodoService`. Isso permite que, ao clicar em "Editar", o formulário entre em "modo de edição", preenchendo o campo de texto com os dados da tarefa e alterando o botão para "Atualizar". A lógica do formulário agora suporta tanto a criação quanto a atualização de tarefas.
+5.  **Exportar para PDF:** Utilizando a biblioteca `jsPDF`, foi criado um botão "Exportar para PDF". A funcionalidade gera um documento contendo a lista de tarefas visíveis na tela, formatadas com seu status (concluída/pendente), e o oferece para download.
 
-**9 e 10. Botão "Editar" desalinhado e botão "Remover" sem cor vermelha:**
-* **Causa Raiz:** O botão "Remover" possuía um estilo inline (`style="color: black"`) que sobrepunha o CSS. A estrutura flexbox separava os botões.
-* **Solução:** O estilo inline foi removido, permitindo que o CSS (`color: red`) fosse aplicado. Os botões de ação foram agrupados em uma `div` própria com `display: flex` para garantir o alinhamento correto.
-
-**11. Lista sem barra de rolagem:**
-* **Causa Raiz:** O container da lista no `todo.component.css` possuía a propriedade `overflow-y: hidden`.
-* **Solução:** A propriedade foi alterada para `overflow-y: auto`, permitindo que a barra de rolagem apareça quando o conteúdo exceder a altura do container.
-
-**12 e 13. Salvar tarefas em branco ou com espaços:**
-* **Causa Raiz:** O método `addTask()` não validava o conteúdo do campo de texto antes de criar a tarefa.
-* **Solução:** Foi adicionada uma verificação no início da função (`if (!this.newTaskTitle || !this.newTaskTitle.trim())`) para impedir a criação de tarefas com título inválido.
-
-## Relatório de Débito Técnico
-Devido à priorização da correção de todos os bugs existentes e da estabilização da aplicação, a implementação das **novas funcionalidades/melhorias** solicitadas não foi iniciada. Elas permanecem como débito técnico a ser abordado em uma próxima fase do projeto.
+6.  **Alertas Modernos com SweetAlert:** Todos os `confirm()` nativos do navegador foram substituídos por chamadas à biblioteca `SweetAlert2`, proporcionando diálogos de confirmação mais elegantes, informativos e com uma experiência de usuário superior.
