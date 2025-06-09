@@ -49,6 +49,10 @@ export class TodoComponent implements OnInit {
     this.showCompletedTasks = !this.showCompletedTasks;
   }
 
+  sortAlphabetically(): void {
+    this.todos.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
   get filteredTodos() {
     if(this.showCompletedTasks) {
       return this.todos;
