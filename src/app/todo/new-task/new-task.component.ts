@@ -90,4 +90,9 @@ export class NewTaskComponent implements OnInit, OnDestroy {
       this.editSubscription.unsubscribe();
     }
   }
+
+  onEnter(event: Event): void {
+    event.preventDefault();
+    this.addTask();
+  }
 }
