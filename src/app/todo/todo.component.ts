@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
 import Swal from 'sweetalert2';
-
+import jsPDF from 'jspdf';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -83,7 +83,34 @@ clearAll() {
   sortAlphabetically(): void {
     this.todos.sort((a, b) => a.title.localeCompare(b.title));
   }
+  exportToPdf(): void {
+    if (this.filteredTodos.length === 0) {
+      Swal.fire('Nenhuma tarefa', 'Não há tarefas visíveis para exportar.', 'info');
+      return;
+  }
+  const doc = new jsPDF();
+    let y = 20; // Posição vertical inicial
 
+    doc.setFontSize(18);
+    doc.text('Lista de Tarefas', 14, y);
+    y += 10;
+
+    doc.setFontSize(12);
+    this.filteredTodos.forEach(todo => {
+      
+      // Previne que o texto ultrapasse a página
+      if (y > 280) {
+        doc.addPage();
+        y = 20; // Reseta a posição na nova página
+      }
+      const status = todo.completed ? '[x]' : '[ ]';
+      const taskText = `${status} ${todo.title}`;
+      doc.text(taskText, 14, y);
+      y += 7; // Incrementa a posição para a próxima linha
+    });
+
+    doc.save('todo-list.pdf');
+}
   get filteredTodos() {
     if(this.showCompletedTasks) {
       return this.todos;
