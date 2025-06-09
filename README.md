@@ -1,10 +1,12 @@
+Relatório Técnico - Márcio Lucas
+
 ## Visão Geral da Solução
 
 Este projeto foi recebido em um estado não funcional e com uma lista extensa de bugs. O trabalho realizado focou em três frentes principais:
 
 1.  **Estabilização:** Correção de múltiplos erros de compilação, configuração e dependências que impediam a inicialização da aplicação.
-2.  **Correção de Bugs:** Resolução de todos os 13 bugs de funcionalidade e interface reportados pela equipe de QA, resultando em uma aplicação estável e confiável.
-3.  **Implementação de Melhorias:** Desenvolvimento e integração de todas as 6 novas funcionalidades solicitadas, elevando a qualidade e a experiência de uso da aplicação.
+2.  **Correção de Bugs:** Resolução de todos os bugs de funcionalidade e interface reportados pela equipe de QA, resultando em uma aplicação estável e confiável.
+3.  **Implementação de Melhorias:** Desenvolvimento e integração de todas as novas funcionalidades solicitadas, elevando a qualidade e a experiência de uso da aplicação.
 
 O resultado é uma aplicação robusta, funcional e moderna, com código limpo e seguindo as boas práticas de desenvolvimento em Angular.
 
@@ -14,11 +16,11 @@ Para executar a aplicação localmente, siga os passos abaixo:
 
 1.  **Clonar o repositório:**
     ```bash
-    git clone (https://github.com/marcioluca/teste-trainee-dev)
+    git clone https://github.com/marcioluca/teste-trainee-dev
     ```
 2.  **Navegar para a pasta do projeto:**
     ```bash
-    cd nome-da-pasta
+    cd teste-trainee-dev
     ```
 3.  **Instalar as dependências:**
     ```bash
@@ -35,7 +37,7 @@ Para executar a aplicação localmente, siga os passos abaixo:
 A aplicação não iniciava devido a uma série de erros. As seguintes correções foram aplicadas para estabilizar o ambiente:
 * **Script `start` Ausente:** Adicionado `"start": "ng serve"` ao `package.json`.
 * **Dependência Faltando:** Adicionada a dependência `@fortawesome/fontawesome-free` ao `package.json`.
-* **Erro de Compilação de Componentes:** Corrigido erro de digitação na classe `HeaderComponent`, adicionado o decorator `@Component` ao `NewTaskComponent` e importado o `RouterModule` no `AppModule` para reconhecer a diretiva `<router-outlet>`.
+* **Erro de Compilação de Componentes:** Corrigido erro de digitação na classe `HeaderComponent`, adicionado o decorator `@Component` ao `NewTaskComponent`.
 
 ## Relatório de Correção de Bugs
 
