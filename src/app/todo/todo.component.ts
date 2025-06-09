@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo',
@@ -31,17 +32,47 @@ export class TodoComponent implements OnInit {
     this.todoService.deleteTodo(todoId);
   }
 
-  clearAll() {
-    if (this.todos.length > 0 && confirm('Tem certeza que deseja apagar TODAS as tarefas?')) {
-      this.todoService.clearAll();
-      this.loadTodos();
+clearAll() {
+    if (this.todos.length > 0) {
+      Swal.fire({
+        title: 'Você tem certeza?',
+        text: "Esta ação apagará TODAS as tarefas e não pode ser revertida!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sim, apagar tudo!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.todoService.clearAll();
+          this.loadTodos();
+          Swal.fire('Apagadas!', 'Todas as tarefas foram apagadas.', 'success');
+        }
+      });
     }
   }
 
+  
   clearCompletedTasks() {
-    if(confirm('Tem certeza que deseja apagar as tarefas concluidas?')) {
-      this.todoService.clearCompletedTasks();
-      this.loadTodos();   
+    
+    const completedCount = this.todos.filter(t => t.completed).length;
+    if (completedCount > 0) {
+      Swal.fire({
+        title: 'Você tem certeza?',
+        text: `Isso apagará ${completedCount} tarefa(s) concluída(s).`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sim, apagar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.todoService.clearCompletedTasks();
+          this.loadTodos();
+        }
+      });
     }
   }
 
