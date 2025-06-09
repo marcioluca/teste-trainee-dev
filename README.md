@@ -82,10 +82,3 @@ Todos os 13 bugs reportados na lista do QA foram corrigidos. Abaixo, o detalhame
 
 ## Relatório de Débito Técnico
 Devido à priorização da correção de todos os bugs existentes e da estabilização da aplicação, a implementação das **novas funcionalidades/melhorias** solicitadas não foi iniciada. Elas permanecem como débito técnico a ser abordado em uma próxima fase do projeto.
-
-## Relatório de Melhorias
-Para evoluir o sistema, sugiro as seguintes melhorias futuras:
-* **Animações na Lista:** Adicionar animações sutis ao adicionar ou remover tarefas para uma experiência mais fluida.
-* **Categorias/Tags:** Permitir que o usuário categorize tarefas com tags coloridas.
-* **Datas de Vencimento:** Adicionar um campo de data para definir prazos para as tarefas.
-* **Persistência de Dados no Backend:** Substituir o `localStorage` por uma API real para persistência de dados.
