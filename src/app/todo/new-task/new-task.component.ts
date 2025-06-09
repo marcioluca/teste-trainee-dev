@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Todo } from '../../shared/models/todo.model';
 import { TodoService } from 'src/app/shared/services/todo.service';
 import { Subscription } from 'rxjs';
+import { Filter } from 'bad-words';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-task',
@@ -13,6 +15,8 @@ export class NewTaskComponent implements OnInit, OnDestroy {
   isEditMode = false;
   private currentEditingTodo: Todo | null = null;
   private editSubscription!: Subscription;
+
+  filter = new Filter();
 
   constructor(private todoService: TodoService) { }
 
@@ -36,12 +40,21 @@ export class NewTaskComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.filter.isProfane(this.newTaskTitle)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Conteúdo impróprio',
+        text: 'Não é permitido cadastrar tarefas com palavras obscenas.',
+      });
+      return; // FUNÇÃO INTERROMPIDA 
+    }
     if (this.isEditMode && this.currentEditingTodo) {
-     
+      // MODO DE ATUALIZAÇÃO
       const updatedTodo = { ...this.currentEditingTodo, title: this.newTaskTitle.trim() };
       this.todoService.updateTodo(updatedTodo);
       this.todoService.clearEdit();
     } else {
+      // MODO DE CRIAÇÃO
       if(this.newTaskTitle.includes('|')) {
         const titles = this.newTaskTitle.split('|');
         titles.forEach(title => {
@@ -73,7 +86,6 @@ export class NewTaskComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-
     if (this.editSubscription) {
       this.editSubscription.unsubscribe();
     }
