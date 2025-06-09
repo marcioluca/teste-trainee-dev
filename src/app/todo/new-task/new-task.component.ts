@@ -13,16 +13,18 @@ export class NewTaskComponent {
 
   count = 0;
   addTask() {
-    if(this.count > 0) return
+
+    if(!this.newTaskTitle || !this.newTaskTitle.trim()) {
+      return;
+    }
+
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
-      title: this.newTaskTitle,
+      title: this.newTaskTitle.trim(),
       completed: false
     };
-
-    this.todoService.addTodo(newTodo);
+    
     this.todoService.addTodo(newTodo);
     this.newTaskTitle = '';
-    this.count++
   }
 }
